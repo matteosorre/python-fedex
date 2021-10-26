@@ -12,31 +12,31 @@ from ..base_service import FedexBaseService
 
 class FedexRateServiceRequest(FedexBaseService):
     """
-    This class allows you to get the shipping charges for a particular address. 
-    You will need to populate the data structures in self.RequestedShipment, 
+    This class allows you to get the shipping charges for a particular address.
+    You will need to populate the data structures in self.RequestedShipment,
     then send the request.
     """
 
     def __init__(self, config_obj, *args, **kwargs):
         """
-        The optional keyword args detailed on L{FedexBaseService} 
+        The optional keyword args detailed on L{FedexBaseService}
         apply here as well.
 
         @type config_obj: L{FedexConfig}
-        @param config_obj: A valid FedexConfig object.        
+        @param config_obj: A valid FedexConfig object.
         """
 
         self._config_obj = config_obj
 
         # Holds version info for the VersionId SOAP object.
-        self._version_info = {'service_id': 'crs', 'major': '24',
+        self._version_info = {'service_id': 'crs', 'major': '31',
                               'intermediate': '0', 'minor': '0'}
 
         self.RequestedShipment = None
         """@ivar: Holds the RequestedShipment WSDL object including the shipper, recipient and shipt time."""
         # Call the parent FedexBaseService class for basic setup work.
         super(FedexRateServiceRequest, self).__init__(
-                self._config_obj, 'RateService_v24.wsdl', *args, **kwargs)
+                self._config_obj, 'RateService_v31.wsdl', *args, **kwargs)
         self.ClientDetail.Region = config_obj.express_region_code
         """@ivar: Holds the express region code from the config object."""
 
@@ -93,8 +93,8 @@ class FedexRateServiceRequest(FedexBaseService):
     def _assemble_and_send_request(self):
         """
         Fires off the Fedex request.
-        
-        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(), 
+
+        @warning: NEVER CALL THIS METHOD DIRECTLY. CALL send_request(),
             WHICH RESIDES ON FedexBaseService AND IS INHERITED.
         """
 
@@ -110,8 +110,8 @@ class FedexRateServiceRequest(FedexBaseService):
     def add_package(self, package_item):
         """
         Adds a package to the ship request.
-        
-        @type package_item: WSDL object, type of RequestedPackageLineItem 
+
+        @type package_item: WSDL object, type of RequestedPackageLineItem
             WSDL object.
         @keyword package_item: A RequestedPackageLineItem, created by
             calling create_wsdl_object_of_type('RequestedPackageLineItem') on
